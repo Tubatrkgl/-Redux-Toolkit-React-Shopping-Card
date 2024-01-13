@@ -1,9 +1,10 @@
-import React from 'react'
+import { configureStore } from "@reduxjs/toolkit";
+import categoryReducer from "../categorySlice";
 
-const Store = () => {
-  return (
-    <div>Store</div>
-  )
-}
+const store = configureStore({
+  reducer: {
+    category: categoryReducer,
+  },
+});
 
-export default Store
+export default store;

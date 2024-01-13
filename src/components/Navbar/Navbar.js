@@ -1,13 +1,24 @@
-import React ,{ useState }  from 'react'
+import React ,{ useEffect, useState }  from 'react'
 import { Link } from "react-router-dom"
 import { IoMdSearch } from "react-icons/io";
 import { MdShoppingCart } from "react-icons/md"
 import { TiTimes } from "react-icons/ti";
 import { FaBars } from "react-icons/fa";
-
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchCategories } from '../store/categorySlice';
 import "./Navbar.scss"
 const Navbar = () => {
+
+  const dispatch = useDispatch();
+  const {data: categories} = useSelector((state) => state.category);
   const [isSidebarOpen, setIsSidebarOpen]=useState(false);
+  
+  useEffect(() => {
+    dispatch(fetchCategories());
+  
+  }, []);
+  
+  
   return (
     <nav className='navbar'>
       <div className='navbar-content'>
@@ -43,15 +54,20 @@ const Navbar = () => {
               onClick={()=>setIsSidebarOpen(!isSidebarOpen)}>
                 <TiTimes className='times-icon'/>
               </button>
-              <li>
+              {
+              categories.map(category =>{
+                <li>
                 <Link to='/' className='nav-link text-white'>Demos</Link>
               </li>
+              })
+            }
             </ul>
             <button type='button' 
             className='navbar-show-btn text-gold'
             onClick={()=>setIsSidebarOpen(true)}>
               <FaBars />
             </button>
+          
           </div>
         </div>
       </div>
